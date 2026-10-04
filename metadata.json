@@ -1,0 +1,6 @@
+{
+  "name": "vibe-engineering-mcp",
+  "description": "An agentic software-engineering control plane that manages requirements, architecture, tasks, workspaces, execution, verification, integration and checkpoints for autonomous software development.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

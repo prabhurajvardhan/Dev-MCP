@@ -1,0 +1,9 @@
+id: prj-c3c3487d
+name: Test Suite Alpha
+description: Autonomous system test
+rootPath: /app/applet
+status: ACTIVE
+currentPhase: V0_FOUNDATION
+createdAt: 2026-10-04T13:38:53.399Z
+updatedAt: 2026-10-04T13:38:53.399Z
+metadata: {}

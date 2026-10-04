@@ -1,0 +1,14 @@
+id: evd-2c237ca4
+taskId: task-build-math
+moduleId: mod-core-math
+command: node .vibe-test-e2e/calc.js 20 22
+exitCode: 0
+stdout: |
+  Calculating...
+  SUM=42
+stderr: ""
+executionTimeMs: 87
+evidenceType: CLI
+capturedArtifacts: []
+capturedAt: 2026-10-04T13:36:37.359Z
+metadata: {}

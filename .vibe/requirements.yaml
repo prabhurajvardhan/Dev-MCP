@@ -1,0 +1,29 @@
+title: "Vibe Engineering MCP Control Plane"
+goals:
+  - "Decouple worker intelligence (LLMs) from persistent engineering operating system state"
+  - "Enforce observable contract completion gates over raw unverified LLM claims"
+  - "Provide deterministic, acyclic DAG task scheduling with priority resolution"
+  - "Enable seamless cold project resumption across heterogeneous models"
+capabilities:
+  - id: "CAP-01-STATE"
+    name: "Operational State Storage"
+    acceptanceCriteria:
+      - "AC-1: SQLite operational storage with ACID transactions"
+      - "AC-2: Automatic synchronization with human-readable .vibe/ YAML files"
+  - id: "CAP-02-DAG"
+    name: "Task DAG Scheduling"
+    acceptanceCriteria:
+      - "AC-1: Cycle detection and topological sorting"
+      - "AC-2: Automatic promotion of BLOCKED tasks to READY when prerequisites reach VERIFIED"
+      - "AC-3: Priority scheduling with repair task precedence"
+  - id: "CAP-03-GATE"
+    name: "Verification Gate & Automatic Repair"
+    acceptanceCriteria:
+      - "AC-1: Inspection of git diff and modified files"
+      - "AC-2: Execution of runnable observable harness and contract rules"
+      - "AC-3: Automatic repair task synthesis on any gate failure"
+  - id: "CAP-04-CHECKPOINT"
+    name: "Checkpoints and Cold Resumption"
+    acceptanceCriteria:
+      - "AC-1: Snapshot of Git commit SHA, verified capabilities, active tasks, and failures"
+      - "AC-2: Generation of comprehensive briefing for resumed worker models"

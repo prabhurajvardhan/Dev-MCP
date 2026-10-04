@@ -1,0 +1,13 @@
+id: evd-08fe6a4c
+moduleId: mod-core-math
+command: node .vibe-test-e2e/calc.js 20 22
+exitCode: 0
+stdout: |
+  Calculating...
+  SUM=42
+stderr: ""
+executionTimeMs: 84
+evidenceType: CLI
+capturedArtifacts: []
+capturedAt: 2026-10-04T13:36:09.760Z
+metadata: {}
