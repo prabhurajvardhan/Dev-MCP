@@ -1,13 +1,13 @@
 tasks:
   - id: task-build-math
-    projectId: prj-5cf18f8e
+    projectId: prj-4c02a134
     title: Implement CoreMath CLI Runner
     description: Write calc.js to add numbers and print SUM=<result>
     state: VERIFIED
     priority: HIGH
     dependencies: []
     assignedWorkerId: worker-claude
-    claimedAt: 2026-10-04T13:38:51.523Z
+    claimedAt: 2026-10-04T14:22:30.901Z
     moduleId: mod-core-math
     contractSpec:
       harnessCommand: node .vibe-test-e2e/calc.js 20 22
@@ -17,6 +17,6 @@ tasks:
       evidenceType: CLI
     isRepairTask: false
     originalFailingTaskId: null
-    createdAt: 2026-10-04T13:38:51.516Z
-    updatedAt: 2026-10-04T13:38:51.920Z
-    completedAt: 2026-10-04T13:38:51.920Z
+    createdAt: 2026-10-04T14:22:30.896Z
+    updatedAt: 2026-10-04T14:22:31.405Z
+    completedAt: 2026-10-04T14:22:31.405Z

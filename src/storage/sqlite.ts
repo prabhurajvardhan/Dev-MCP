@@ -478,6 +478,27 @@ export class SQLiteStateStore {
     );
   }
 
+  getEvidence(id: string): ObservableEvidence | null {
+    const stmt = this.db.prepare('SELECT * FROM evidence WHERE id = ?');
+    const row = stmt.get(id) as Record<string, unknown> | undefined;
+    if (!row) return null;
+
+    return ObservableEvidenceSchema.parse({
+      id: row.id,
+      taskId: row.task_id ?? undefined,
+      moduleId: row.module_id ?? undefined,
+      command: row.command,
+      exitCode: row.exit_code,
+      stdout: row.stdout,
+      stderr: row.stderr,
+      executionTimeMs: row.execution_time_ms,
+      evidenceType: row.evidence_type,
+      capturedArtifacts: JSON.parse((row.captured_artifacts_json as string) || '[]'),
+      capturedAt: row.captured_at,
+      metadata: JSON.parse((row.metadata_json as string) || '{}'),
+    });
+  }
+
   // --- CHECKPOINTS ---
   saveCheckpoint(checkpoint: Checkpoint): void {
     const stmt = this.db.prepare(`

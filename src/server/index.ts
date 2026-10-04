@@ -1,9 +1,10 @@
+#!/usr/bin/env node
 /**
  * Vibe Engineering MCP Server
  * Entry point for the agentic software-engineering control plane.
  */
-import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
-import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
+import { McpServer } from '@modelcontextprotocol/server';
+import { serveStdio, StdioServerTransport } from '@modelcontextprotocol/server/stdio';
 import path from 'node:path';
 import { SQLiteStateStore } from '../storage/sqlite.js';
 import { VibeFileStore } from '../storage/vibe-file-store.js';
@@ -68,7 +69,7 @@ export function createVibeMcpServer(options: {
   const pathPolicy = new PathPolicy(projectRoot);
   const commandRunner = new CommandRunner(projectRoot, stateStore);
   const gitManager = new GitManager(projectRoot, commandRunner);
-  const workspaceManager = new WorkspaceManager(projectRoot, gitManager);
+  const workspaceManager = new WorkspaceManager(projectRoot, gitManager, commandRunner);
   const observer = new ObservableEvidenceCollector(stateStore, vibeFileStore);
   const moduleRunner = new ModuleRunner(commandRunner, observer, stateStore);
 
@@ -117,13 +118,7 @@ export function createVibeMcpServer(options: {
 }
 
 // Start stdio transport if executed as CLI entry point
-if (process.argv[1] && (process.argv[1].endsWith('server/index.ts') || process.argv[1].endsWith('server/index.js'))) {
+if (process.argv[1] && (process.argv[1].endsWith('server/index.ts') || process.argv[1].endsWith('server/index.js') || process.argv[1].endsWith('vibe-mcp'))) {
   const context = createVibeMcpServer();
-  const transport = new StdioServerTransport();
-  context.server.connect(transport).then(() => {
-    console.error('[Vibe Engineering MCP] Server running on stdio');
-  }).catch((err) => {
-    console.error('[Vibe Engineering MCP] Fatal server error:', err);
-    process.exit(1);
-  });
+  serveStdio(() => context.server, { legacy: 'serve' });
 }

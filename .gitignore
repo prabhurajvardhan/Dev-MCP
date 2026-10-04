@@ -9,3 +9,6 @@ coverage/
 *.sqlite
 *.sqlite-journal
 .vibe-test*
+.worktrees/
+.vibe/observations/*.yaml
+.vibe/checkpoints/chk-*.yaml

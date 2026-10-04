@@ -155,4 +155,9 @@ export class GitManager {
       output: res.stdout + res.stderr,
     };
   }
+
+  async removeWorktree(worktreePath: string, cwd?: string): Promise<boolean> {
+    const res = await this.commandRunner.execute(`git worktree remove --force "${worktreePath}"`, { cwd });
+    return res.exitCode === 0;
+  }
 }

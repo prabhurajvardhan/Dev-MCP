@@ -1,6 +1,6 @@
-id: chk-5712d820
-projectId: prj-5cf18f8e
-gitCommitSha: f1194714c2dacf17dfa18ff66551147d9ca08fd5
+id: chk-244ceebe
+projectId: prj-4c02a134
+gitCommitSha: 1aa7a0801cda713f0790358fa9aa1c74e3a22298
 phase: V0_FOUNDATION
 summary: Verified CoreMath CLI implementation passing all contract tests
 verifiedCapabilities:
@@ -12,8 +12,8 @@ workerAssignments: {}
 workspaceInfo:
   rootPath: /app/applet
 latestObservations:
-  - id: cmd-33d5f1ee
-    projectId: prj-5cf18f8e
+  - id: cmd-01a62867
+    projectId: prj-4c02a134
     command: node .vibe-test-e2e/calc.js 20 22
     cwd: /app/applet
     exitCode: 0
@@ -21,10 +21,10 @@ latestObservations:
       Calculating...
       SUM=42
     stderr: ""
-    executionTimeMs: 87
-    timestamp: 2026-10-04T13:38:51.829Z
-  - id: cmd-dee76336
-    projectId: prj-5cf18f8e
+    executionTimeMs: 100
+    timestamp: 2026-10-04T14:22:31.301Z
+  - id: cmd-ddbda63f
+    projectId: prj-4c02a134
     command: node .vibe-test-e2e/calc.js 20 22
     cwd: /app/applet
     exitCode: 0
@@ -32,8 +32,8 @@ latestObservations:
       Calculating...
       SUM=42
     stderr: ""
-    executionTimeMs: 87
-    timestamp: 2026-10-04T13:38:51.636Z
+    executionTimeMs: 107
+    timestamp: 2026-10-04T14:22:31.072Z
 failures: []
 architectureDecisions: []
 interfaceVersions:
@@ -44,4 +44,4 @@ runtimeCommands:
   - node .vibe-test-e2e/calc.js 20 22
   - node .vibe-test-e2e/calc.js 20 22
 filesTouched: []
-createdAt: 2026-10-04T13:38:51.975Z
+createdAt: 2026-10-04T14:22:31.465Z

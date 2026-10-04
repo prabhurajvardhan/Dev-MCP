@@ -1,7 +1,7 @@
 /**
  * MCP Tools: Contract and Integration Verification
  */
-import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
+import { McpServer } from '@modelcontextprotocol/server';
 import { z } from 'zod';
 import { ContractEngine } from '../../engine/contracts.js';
 import { IntegrationManager } from '../../engine/integration.js';
@@ -13,13 +13,15 @@ export function registerVerificationTools(
   integrationManager: IntegrationManager,
   stateStore: SQLiteStateStore
 ) {
-  server.tool(
+  server.registerTool(
     'contract_verify',
-    'Validates collected observable evidence against contract rules (exit codes, output regex, JSON schema, artifacts)',
     {
-      contractId: z.string().describe('ID of the contract to verify against'),
-      evidenceId: z.string().optional().describe('ID of the stored evidence to verify'),
-      taskId: z.string().optional().describe('Task ID to fetch latest evidence for'),
+      description: 'Validates collected observable evidence against contract rules (exit codes, output regex, JSON schema, artifacts)',
+      inputSchema: {
+        contractId: z.string().describe('ID of the contract to verify against'),
+        evidenceId: z.string().optional().describe('ID of the stored evidence to verify'),
+        taskId: z.string().optional().describe('Task ID to fetch latest evidence for'),
+      },
     },
     async ({ contractId, evidenceId, taskId }) => {
       try {
@@ -27,12 +29,14 @@ export function registerVerificationTools(
         if (!contract) {
           return {
             isError: true,
-            content: [{ type: 'text', text: `Contract ${contractId} not found` }],
+            content: [{ type: 'text' as const, text: `Contract ${contractId} not found` }],
           };
         }
 
         let evidence;
-        if (taskId) {
+        if (evidenceId) {
+          evidence = stateStore.getEvidence(evidenceId);
+        } else if (taskId) {
           const evidenceList = stateStore.getEvidenceByTask(taskId);
           if (evidenceList.length > 0) {
             evidence = evidenceList[0];
@@ -42,34 +46,36 @@ export function registerVerificationTools(
         if (!evidence) {
           return {
             isError: true,
-            content: [{ type: 'text', text: 'No evidence found to verify against contract' }],
+            content: [{ type: 'text' as const, text: 'No evidence found to verify against contract' }],
           };
         }
 
         const result = contractEngine.verifyEvidenceAgainstContract(contract, evidence);
         return {
-          content: [{ type: 'text', text: JSON.stringify(result, null, 2) }],
+          content: [{ type: 'text' as const, text: JSON.stringify(result, null, 2) }],
         };
       } catch (err) {
         return {
           isError: true,
-          content: [{ type: 'text', text: `Contract verification error: ${(err as Error).message}` }],
+          content: [{ type: 'text' as const, text: `Contract verification error: ${(err as Error).message}` }],
         };
       }
     }
   );
 
-  server.tool(
+  server.registerTool(
     'integration_verify',
-    'Executes end-to-end integration harness across multiple modules to verify complete system behavior',
     {
-      projectId: z.string().describe('ID of the project'),
-      name: z.string().describe('Name of the integration test'),
-      description: z.string().describe('Description of cross-module interaction being verified'),
-      modulesInvolved: z.array(z.string()).describe('List of module IDs involved'),
-      integrationCommand: z.string().describe('Command to run integration test suite'),
-      expectedPattern: z.string().optional().describe('Regex pattern expected in output'),
-      cwd: z.string().optional().describe('Optional working directory'),
+      description: 'Executes end-to-end integration harness across multiple modules to verify complete system behavior',
+      inputSchema: {
+        projectId: z.string().describe('ID of the project'),
+        name: z.string().describe('Name of the integration test'),
+        description: z.string().describe('Description of cross-module interaction being verified'),
+        modulesInvolved: z.array(z.string()).describe('List of module IDs involved'),
+        integrationCommand: z.string().describe('Command to run integration test suite'),
+        expectedPattern: z.string().optional().describe('Regex pattern expected in output'),
+        cwd: z.string().optional().describe('Optional working directory'),
+      },
     },
     async ({ projectId, name, description, modulesInvolved, integrationCommand, expectedPattern, cwd }) => {
       try {
@@ -86,12 +92,12 @@ export function registerVerificationTools(
         );
 
         return {
-          content: [{ type: 'text', text: JSON.stringify(result, null, 2) }],
+          content: [{ type: 'text' as const, text: JSON.stringify(result, null, 2) }],
         };
       } catch (err) {
         return {
           isError: true,
-          content: [{ type: 'text', text: `Integration verification error: ${(err as Error).message}` }],
+          content: [{ type: 'text' as const, text: `Integration verification error: ${(err as Error).message}` }],
         };
       }
     }
